@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Коллоквиум математика. Часть 2 | Интерактивный конспект</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <style>
+        /* ===== ПЕРЕМЕННЫЕ ДЛЯ ТЕМ ===== */
+        :root {
+            /* Светлая тема (по умолчанию) */
+            --bg-body: #f4f6fb;
+            --bg-container: #ffffff;
+            --bg-card: #fafbff;
+            --bg-formula: #f0f4ff;
+            --bg-highlight: #f7f9ff;
+            --bg-term: #eef3ff;
+            --bg-term-hover: #dbe6ff;
+            --bg-term-active: #c7d6f0;
+            --bg-popup: #ffffff;
+            --text-main: #1e2a3e;
+            --text-heading: #1a365d;
+            --text-plain: #3a4a63;
+            --text-muted: #5a6e8c;
+            --text-formula: #1a365d;
+            --text-term: #1a365d;
+            --border-main: #e2e8f0;
+            --border-card: #e2e8f0;
+            --border-term: #c7d6f0;
+            --border-popup: #c7d6f0;
+            --border-formula: #c7d6f0;
+            --accent: #4a7cff;
+            --accent-hover: #3563e0;
+            --shadow-container: 0 8px 30px rgba(0, 20, 60, 0.08);
+            --shadow-card-hover: 0 6px 20px rgba(74, 124, 255, 0.12);
+            --shadow-popup: 0 12px 35px rgba(0, 20, 60, 0.18);
+        }
+
+        [data-theme="dark"] {
+            --bg-body: #0f1420;
+            --bg-container: #161c2b;
+            --bg-card: #1b2233;
+            --bg-formula: #121826;
+            --bg-highlight: #121826;
+            --bg-term: #232c40;
+            --bg-term-hover: #2c3852;
+            --bg-term-active: #36466b;
+            --bg-popup: #1e2637;
+            --text-main: #d8e0ec;
+            --text-heading: #e8eef8;
+            --text-plain: #8a9ab5;
+            --text-muted: #7a8ca8;
+            --text-formula: #a8c4ff;
+            --text-term: #cfd9e8;
+            --border-main: #232c40;
+            --border-card: #232c40;
+            --border-term: #2e3a52;
+            --border-popup: #3a4a6b;
+            --border-formula: #2a3550;
+            --accent: #5b8def;
+            --accent-hover: #4a7ce0;
+            --shadow-container: 0 8px 40px rgba(0, 0, 0, 0.4);
+            --shadow-card-hover: 0 4px 20px rgba(0, 0, 0, 0.25);
+            --shadow-popup: 0 16px 45px rgba(0, 0, 0, 0.6);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Poppins', system-ui, sans-serif;
+        }
+
+        body {
+            background: var(--bg-body);
+            color: var(--text-main);
+            padding: 2rem 1.5rem;
+            min-height: 100vh;
+            line-height: 1.6;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .container {
+            max-width: 1150px;
+            margin: 0 auto;
+            background: var(--bg-container);
+            border-radius: 20px;
+            padding: 2.5rem 2rem 3rem;
+            box-shadow: var(--shadow-container);
+            border: 1px solid var(--border-main);
+            transition: background 0.3s, border-color 0.3s, box-shadow 0.3s;
+            position: relative;
+        }
+
+        /* Кнопка переключения темы */
+        .theme-toggle {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: var(--bg-term);
+            border: 1px solid var(--border-term);
+            color: var(--text-term);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.15rem;
+            transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.15s;
+            z-index: 10;
+        }
+
+        .theme-toggle:hover {
+            background: var(--bg-term-hover);
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .theme-toggle:active {
+            transform: scale(0.93);
+        }
+
+        h1 {
+            font-size: clamp(1.8rem, 5vw, 2.4rem);
+            font-weight: 700;
+            text-align: center;
+            color: var(--text-heading);
+            letter-spacing: 1px;
+            margin-bottom: 0.4rem;
+            padding: 0 3rem;
+            transition: color 0.3s;
+        }
+
+        .subhead {
+            text-align: center;
+            font-size: 1rem;
+            color: var(--text-muted);
+            margin-bottom: 2.2rem;
+            padding-bottom: 1.2rem;
+            border-bottom: 1px solid var(--border-main);
+            transition: color 0.3s, border-color 0.3s;
+        }
+
+        .subhead i {
+            color: var(--accent);
+            margin: 0 6px;
+        }
+
+        /* Секции */
+        .section {
+            margin-bottom: 2.2rem;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-heading);
+            margin-bottom: 1rem;
+            padding-left: 14px;
+            border-left: 4px solid var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: color 0.3s, border-color 0.3s;
+        }
+
+        .section-title i {
+            color: var(--accent);
+            font-size: 1.1rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.3rem;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 1.5rem 1.3rem;
+            border: 1px solid var(--border-card);
+            transition: background 0.3s, border-color 0.25s, box-shadow 0.25s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            border-color: var(--accent);
+            box-shadow: var(--shadow-card-hover);
+        }
+
+        .card h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-heading);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding-bottom: 0.6rem;
+            border-bottom: 1px solid var(--border-card);
+            transition: color 0.3s, border-color 0.3s;
+        }
+
+        .card h3 i {
+            color: var(--accent);
+            font-size: 1.05rem;
+        }
+
+        /* ===== ТЕРМИН-КНОПКА ===== */
+        .term {
+            display: inline-block;
+            background: var(--bg-term);
+            color: var(--text-term);
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            position: relative;
+            margin: 4px 4px 4px 0;
+            border: 1px solid var(--border-term);
+            transition: background 0.2s, border-color 0.2s, color 0.2s;
+            user-select: none;
+            font-size: 0.92rem;
+        }
+
+        .term:hover {
+            background: var(--bg-term-hover);
+            border-color: var(--accent);
+            color: var(--text-heading);
+        }
+
+        .term:active {
+            background: var(--bg-term-active);
+        }
+
+        .term.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #ffffff;
+        }
+
+        /* Всплывающее окно определения */
+        .definition-popup {
+            position: fixed;
+            z-index: 9999;
+            max-width: 380px;
+            background: var(--bg-popup);
+            border: 1px solid var(--border-popup);
+            border-radius: 14px;
+            padding: 1.2rem 1.3rem;
+            box-shadow: var(--shadow-popup);
+            color: var(--text-main);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(8px) scale(0.97);
+            transition: opacity 0.2s, transform 0.2s, background 0.3s, border-color 0.3s;
+        }
+
+        .definition-popup.show {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0) scale(1);
+        }
+
+        .definition-popup::before {
+            content: "ОПРЕДЕЛЕНИЕ";
+            display: block;
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .definition-popup .def-title {
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: var(--text-heading);
+            margin-bottom: 0.4rem;
+            transition: color 0.3s;
+        }
+
+        .definition-popup .def-text {
+            color: var(--text-plain);
+            transition: color 0.3s;
+        }
+
+        .term-line {
+            margin-bottom: 0.55rem;
+        }
+
+        /* Формулы */
+        .formula-box {
+            background: var(--bg-formula);
+            padding: 0.9rem 1rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            text-align: center;
+            color: var(--text-formula);
+            border: 1px solid var(--border-formula);
+            margin: 0.8rem 0;
+            word-break: break-word;
+            font-weight: 600;
+            transition: background 0.3s, border-color 0.3s, color 0.3s;
+            overflow-x: auto;
+        }
+
+        .formula-box .MathJax {
+            color: var(--text-formula) !important;
+        }
+
+        .formula-explain {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            margin: -0.4rem 0 0.9rem 0;
+            padding: 0 0.5rem;
+            line-height: 1.4;
+        }
+
+        .formula-explain strong {
+            color: var(--text-plain);
+        }
+
+        .highlight-box {
+            background: var(--bg-highlight);
+            border-radius: 12px;
+            padding: 0.8rem 1rem;
+            margin: 0.8rem 0;
+            border-left: 3px solid var(--accent);
+            color: var(--text-plain);
+            font-size: 0.92rem;
+            line-height: 1.6;
+            transition: background 0.3s, color 0.3s, border-color 0.3s;
+        }
+
+        .footer {
+            margin-top: 2.8rem;
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            padding-top: 1.4rem;
+            border-top: 1px solid var(--border-main);
+            transition: color 0.3s, border-color 0.3s;
+        }
+
+        .footer i {
+            color: var(--accent);
+        }
+
+        @media (max-width: 650px) {
+            body { padding: 1rem 0.8rem; }
+            .container { padding: 1.6rem 1rem 2rem; border-radius: 16px; }
+            .card { padding: 1.3rem 1rem; }
+            .definition-popup { max-width: 290px; }
+            .theme-toggle { top: 1rem; right: 1rem; width: 40px; height: 40px; }
+            h1 { padding: 0 2.5rem; }
+        }
+    </style>
+</head>
+<body data-theme="light">
+    <div class="container">
+        <button class="theme-toggle" id="themeToggle" title="Переключить тему">
+            <i class="fas fa-moon"></i>
+        </button>
+
+        <h1>Коллоквиум математика <br>Часть 2</h1>
+        <div class="subhead">
+            <i class="fas fa-hand-pointer"></i> Нажмите на термин — появится определение
+        </div>
+
+        <!-- РАЗДЕЛ: СЛУЧАЙНЫЕ ВЕЛИЧИНЫ -->
+        <div class="section">
+            <div class="section-title"><i class="fas fa-cubes"></i> Случайные величины</div>
+            <div class="grid">
+
+                <!-- Базовые понятия -->
+                <div class="card">
+                    <h3><i class="fas fa-random"></i> Основные понятия</h3>
+
+                    <div class="term-line">
+                        <span class="term" data-term="Случайная величина"
+                              data-def="Величина, которая может принимать случайные значения при соблюдении комплекса условий.">Случайная величина</span>
+                    </div>
+
+                    <div class="term-line">
+                        <span class="term" data-term="Закон распределения"
+                              data-def="Любое соотношение между всеми возможными значениями случайной величины и соответствующими вероятностями этих значений.">Закон распределения</span>
+                    </div>
+
+                    <div class="term-line">
+                        <span class="term" data-term="Дискретная случайная величина (ДСВ)"
+                              data-def="Величина, которая принимает отдельные, изолированные друг от друга значения.">Дискретная случайная величина (ДСВ)</span>
+                    </div>
+
+                    <div class="term-line">
+                        <span class="term" data-term="Непрерывная случайная величина (НСВ)"
+                              data-def="Величина, значения которой заполняют сплошь некоторый отрезок или всю числовую прямую.">Непрерывная случайная величина (НСВ)</span>
+                    </div>
+                </div>
+
+                <!-- Ряд распределения -->
+                <div class="card">
+                    <h3><i class="fas fa-table"></i> Ряд и многоугольник распределения</h3>
+
+                    <div class="term-line">
+                        <span class="term" data-term="Ряд распределения"
+                              data-def="Таблица (только для ДСВ), в которой перечислены все возможные значения СВ и соответствующие вероятности этих значений.">Ряд распределения</span>
+                    </div>
+
+                    <div class="term-line">
+                        <span class="term" data-term="Многоугольник распределения"
+                              data-def="Графическое изображение ряда распределения.">Многоугольник распределения</span>
+                    </div>
+                </div>
+
+                <!-- Функция распределения -->
+                <div class="card">
+                    <h3><i class="fas fa-chart-area"></i> Функция распределения</h3>
+
+                    <div class="term-line">
+                        <span class="term" data-term="Функция распределения F(x)"
+                              data-def="Функция F(x) = P(X < x) — вероятность того, что случайная величина X примет значение меньшее, чем x.">Функция распределения F(x)</span>
+                    </div>
+
+                    <div class="formula-box">\[ F(x) = P(X < x) \]</div>
+                    <div class="formula-explain">
+                        <strong>Читается:</strong> «Функция распределения от икс равна вероятности того, что икс меньше икс».<br>
+                        <strong>Смысл:</strong> Показывает вероятность того, что случайная величина примет значение левее заданной точки \(x\).
+                    </div>
+
+                    <div class="highlight-box">
+                        <strong>Свойства:</strong><br>
+                        1) \(0 \le F(x) \le 1\)<br>
+                        2) \(F(x)\) — неубывающая функция<br>
+                        3) \(P(a < X < b) = F(b) - F(a)\)<br>
+                        4) \(F(-\infty) = 0, \ F(+\infty) = 1\)
+                    </div>
+                </div>
+
+                <!-- Функция плотности -->
+                <div class="card">
+                    <h3><i class="fas fa-wave-square"></i> Функция плотности (НСВ)</h3>
+
+                    <div class="term-line">
+                        <span class="term" data-term="Функция плотности f(x)"
+                              data-def="Производная функции распределения. Характеризует плотность вероятности для непрерывной случайной величины.">Функция плотности f(x)</span>
+                    </div>
+
+                    <div class="formula-box">\[ f(x) = F'(x) \]</div>
+                    <div class="formula-explain">
+                        <strong>Читается:</strong> «Плотность равна производной функции распределения».<br>
+                        <strong>Смысл:</strong> Аналог вероятности для непрерывной величины.
+                    </div>
+
+                    <div class="highlight-box">
+                        <strong>Свойства:</strong><br>
+                        1) \(f(x) \ge 0\) (неотрицательна)<br>
+                        2) \(\int_{-\infty}^{+\infty} f(x) dx = 1\) (площадь под графиком равна 1)<br>
+                        3) \(P(a < X < b) = \int_{a}^{b} f(x) dx\) (вероятность попадания в интервал — это площадь под кривой на этом отрезке).
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- РАЗДЕЛ: ЧИСЛОВЫЕ ХАРАКТЕРИСТИКИ -->
+        <div class="section">
+            <div class="section-title"><i class="fas fa-calculator"></i> Числовые характеристики</div>
+            <div class="grid">
+
+                <!-- Характеристики положения -->
+                <div class="card">
+                    <h3><i class="fas fa-balance-scale"></i> Характеристики положения</h3>
+
+                    <div class="term-line">
+                        <span class="term" data-term="Математическое ожидание M(X)"
+                              data-def="Характеризует среднее значение случайной величины. Для ДСВ — это сумма всех возможных значений на их вероятности.">Математическое ожидание M(X)</span>
+                    </div>
+                    <div class="formula-box">\[ M(X) = \sum x_i \cdot p_i \]</div>
+                    <div class="formula-explain">
+                        <strong>Читается:</strong> «Сумма по и от икс-и на п-и».<br>
+                        <strong>Смысл:</strong> \(x_i\) — значения, \(p_i\) — их вероятности. Это «взвешенное среднее».
+                    </div>
+
+                    <div class="highlight-box">
+                        <strong>Свойства M(X):</strong><br>
+                        1) \(M[C] = C\) (константа)<br>
+                        2) \(M(CX) = C \cdot M(X)\)<br>
+                        3) \(M[X+Y] = M[X] + M[Y]\)<br>
+                        4) \(M[X \cdot Y] = M[X] \cdot M[Y]\) (если независимы)
+                    </div>
+
+                    <div class="term-line" style="margin-top:1rem;">
+                        <span class="term" data-term="Мода"
+                              data-def="Значение случайной величины, которое обладает наибольшей вероятностью.">Мода</span>
+                        <span class="term" data-term="Медиана"
+                              data-def="Срединное значение упорядоченного по возрастанию или убыванию набора чисел, которое делит его ровно пополам.">Медиана</span>
+                    </div>
+                </div>
+
+                <!-- Характеристики рассеивания -->
+                <div class="card">
+                    <h3><i class="fas fa-arrows-alt-h"></i> Характеристики рассеивания</h3>
+
+                    <div class="term-line">
+                        <span class="term" data-term="Дисперсия D(X)"
+                              data-def="Математическое ожидание квадратов отклонений значений случайной величины от её математического ожидания. Характеризует разброс.">Дисперсия D(X)</span>
+                    </div>
+                    <div class="formula-box">\[ D(X) = M(X^2) - [M(X)]^2 \]</div>
+                    <div class="formula-explain">
+                        <strong>Читается:</strong> «Дисперсия равна матожиданию икс-квадрат минус квадрат матожидания икс».<br>
+                        <strong>Смысл:</strong> Показывает, насколько сильно значения разбросаны вокруг среднего.
+                    </div>
+
+                    <div class="highlight-box">
+                        <strong>Свойства D(X):</strong><br>
+                        1) \(D(C) = 0\)<br>
+                        2) \(D(C \cdot X) = C^2 \cdot D(X)\)<br>
+                        3) \(D(X+Y) = D(X) + D(Y)\) (если независимы)
+                    </div>
+
+                    <div class="term-line" style="margin-top:1rem;">
+                        <span class="term" data-term="Среднее квадратическое отклонение σ"
+                              data-def="Характеризует рассеивание случайной величины вокруг математического ожидания. Равно корню из дисперсии.">Среднее квадратическое отклонение σ</span>
+                    </div>
+                    <div class="formula-box">\[ \sigma = \sqrt{D(X)} \]</div>
+                    <div class="formula-explain">
+                        <strong>Читается:</strong> «Сигма равна корню из дисперсии».<br>
+                        <strong>Смысл:</strong> Более удобная мера разброса (в тех же единицах, что и сама величина).
+                    </div>
+                </div>
+
+                <!-- Моменты -->
+                <div class="card">
+                    <h3><i class="fas fa-cogs"></i> Моменты распределения</h3>
+
+                    <div class="term-line">
+                        <span class="term" data-term="Начальные моменты"
+                              data-def="Описывают величину относительно начала отсчета (нуля). Начальный момент k-го порядка: α_k = M[X^k].">Начальные моменты</span>
+                    </div>
+
+                    <div class="term-line">
+                        <span class="term" data-term="Центральные моменты"
+                              data-def="Описывают отклонение от математического ожидания. Центральный момент k-го порядка: μ_k = M[(X - M[X])^k].">Центральные моменты</span>
+                    </div>
+
+                    <div class="highlight-box">
+                        <strong>Важно:</strong> Центральный момент 2-го порядка — это и есть дисперсия \(D[X] = M[(X-M[X])^2]\).
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- РАЗДЕЛ: ЗАКОНЫ РАСПРЕДЕЛЕНИЯ -->
+        <div class="section">
+            <div class="section-title"><i class="fas fa-chart-pie"></i> Законы распределения</div>
+            <div class="grid">
+
+                <!-- Биномиальный закон -->
+                <div class="card">
+                    <h3><i class="fas fa-coins"></i> Биномиальный закон</h3>
+
+                    <div class="term-line">
+                        <span class="term" data-term="Биномиальный закон"
+                              data-def="Закон распределения числа успехов в n независимых испытаниях, в каждом из которых успех наступает с вероятностью p.">Биномиальный закон</span>
+                    </div>
+
+                    <div class="formula-box">\[ P(X = m) = C_n^m \cdot p^m \cdot q^{n-m} \]</div>
+                    <div class="formula-explain">
+                        <strong>Читается:</strong> «Цэ из эн по эм умножить на пэ в степени эм умножить на ку в степени эн минус эм».<br>
+                        <strong>Смысл:</strong> \(n\) — всего испытаний, \(m\) — число успехов, \(p\) — вероятность успеха, \(q\) — вероятность неудачи (1-p), \(C_n^m\) — число сочетаний.
+                    </div>
+
+                    <div class="highlight-box">
+                        <strong>Характеристики:</strong><br>
+                        1) \(M(X) = n \cdot p\)<br>
+                        2) \(D(X) = n \cdot p \cdot q\)
+                    </div>
+                </div>
+
+                <!-- Закон Пуассона -->
+                <div class="card">
+                    <h3><i class="fas fa-clock"></i> Закон Пуассона</h3>
+
+                    <div class="term-line">
+                        <span class="term" data-term="Закон Пуассона"
+                              data-def="Закон распределения редких событий. ДСВ распределена по этому закону, если принимает целые неотрицательные значения. Лямбда — интенсивность потока.">Закон Пуассона</span>
+                    </div>
+
+                    <div class="formula-box">\[ P(X = m) = \frac{\lambda^m}{m!} \cdot e^{-\lambda} \]</div>
+                    <div class="formula-explain">
+                        <strong>Читается:</strong> «Лямбда в степени эм делить на эм-факториал умножить на е в степени минус лямбда».<br>
+                        <strong>Смысл:</strong> \(\lambda\) (лямбда) — среднее число событий (интенсивность), \(m\) — фактическое число событий, \(e\) — основание натурального логарифма.
+                    </div>
+
+                    <div class="highlight-box">
+                        <strong>Характеристики:</strong><br>
+                        1) \(M(X) = \lambda\)<br>
+                        2) \(D(X) = \lambda\)<br>
+                        <em>Особенность: матожидание и дисперсия равны.</em>
+                    </div>
+                </div>
+
+                <!-- Равномерный закон -->
+                <div class="card">
+                    <h3><i class="fas fa-arrows-alt-h"></i> Равномерный закон (НСВ)</h3>
+
+                    <div class="term-line">
+                        <span class="term" data-term="Равномерное распределение"
+                              data-def="НСВ X называется распределенной равномерно, если ее плотность вероятности постоянна на отрезке [a; b] и равна нулю вне его.">Равномерное распределение</span>
+                    </div>
+
+                    <div class="formula-box">
+                        \[
+                        f(x) = 
+                        \begin{cases} 
+                        \frac{1}{b - a}, & x \in [a; b] \\
+                        0, & x \notin [a; b]
+                        \end{cases}
+                        \]
+                    </div>
+                    <div class="formula-explain">
+                        <strong>Читается:</strong> «Плотность равна единице делить на разность бэ и а на отрезке от а до бэ, и нулю вне его».<br>
+                        <strong>Смысл:</strong> \(a, b\) — границы интервала, на котором величина распределена с одинаковой вероятностью.
+                    </div>
+
+                    <div class="highlight-box">
+                        <strong>Характеристики:</strong><br>
+                        1) \(M(X) = \frac{a + b}{2}\) (середина отрезка)<br>
+                        2) \(D(X) = \frac{(b - a)^2}{12}\)<br>
+                        3) \(P(c < X < d) = \frac{d - c}{b - a}\) (вероятность попадания в подинтервал)
+                    </div>
+                </div>
+
+                <!-- Нормальный закон -->
+                <div class="card">
+                    <h3><i class="fas fa-bell"></i> Нормальный закон (НСВ)</h3>
+
+                    <div class="term-line">
+                        <span class="term" data-term="Нормальное распределение"
+                              data-def="НСВ распределена по нормальному закону, если ее плотность имеет вид кривой Гаусса (колоколообразной).">Нормальное распределение</span>
+                    </div>
+
+                    <div class="formula-box">\[ f(x) = \frac{1}{\sigma \sqrt{2\pi}} e^{-\frac{(x-a)^2}{2\sigma^2}} \]</div>
+                    <div class="formula-explain">
+                        <strong>Читается:</strong> «Один делить на сигма корень из двух пи, умножить на е в степени минус икс минус а в квадрате, делить на два сигма квадрат».<br>
+                        <strong>Смысл:</strong> \(a\) (или \(M(x)\)) — матожидание (центр), \(\sigma\) — среднее квадратическое отклонение (ширина «колокола»), \(\pi \approx 3.14\), \(e \approx 2.71\).
+                    </div>
+
+                    <div class="highlight-box">
+                        <strong>Характеристики:</strong><br>
+                        1) \(M(X) = a\)<br>
+                        2) \(D(X) = \sigma^2\)
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="footer">
+            <i class="fas fa-book-open"></i> Интерактивный конспект по теории вероятностей (Часть 2)
+        </div>
+    </div>
+
+    <!-- Всплывающее окно определения -->
+    <div class="definition-popup" id="definitionPopup">
+        <div class="def-title" id="popupTitle">Термин</div>
+        <div class="def-text" id="popupText">Определение</div>
+    </div>
+
+    <script>
+        // ===== ПЕРЕКЛЮЧЕНИЕ ТЕМЫ =====
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = themeToggle.querySelector('i');
+        const body = document.body;
+
+        // Проверяем сохранённую тему
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            body.setAttribute('data-theme', 'dark');
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            const current = body.getAttribute('data-theme');
+            if (current === 'dark') {
+                body.setAttribute('data-theme', 'light');
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+                localStorage.setItem('theme', 'light');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+
+        // ===== ВСПЛЫВАЮЩИЕ ОПРЕДЕЛЕНИЯ =====
+        const popup = document.getElementById('definitionPopup');
+        const popupTitle = document.getElementById('popupTitle');
+        const popupText = document.getElementById('popupText');
+        let activeTerm = null;
+
+        document.querySelectorAll('.term').forEach(term => {
+            term.addEventListener('click', (e) => {
+                e.stopPropagation();
+
+                // Если кликнули на тот же термин — закрываем
+                if (activeTerm === term) {
+                    popup.classList.remove('show');
+                    term.classList.remove('active');
+                    activeTerm = null;
+                    return;
+                }
+
+                // Убираем подсветку с предыдущего
+                if (activeTerm) {
+                    activeTerm.classList.remove('active');
+                }
+
+                // Подсвечиваем новый
+                term.classList.add('active');
+                activeTerm = term;
+
+                showPopup(term);
+            });
+        });
+
+        function showPopup(el) {
+            const termName = el.getAttribute('data-term') || el.textContent;
+            const definition = el.getAttribute('data-def') || 'Определение не найдено.';
+            popupTitle.textContent = termName;
+            popupText.textContent = definition;
+
+            const rect = el.getBoundingClientRect();
+            let left = rect.left;
+            let top = rect.bottom + 12;
+
+            const popupWidth = 380;
+            if (left + popupWidth > window.innerWidth) {
+                left = window.innerWidth - popupWidth - 20;
+            }
+            if (left < 10) left = 10;
+            if (top + 160 > window.innerHeight) {
+                top = rect.top - 170;
+                if (top < 10) top = 10;
+            }
+
+            popup.style.left = left + 'px';
+            popup.style.top = top + 'px';
+            popup.classList.add('show');
+        }
+
+        // Скрытие при клике в любом другом месте
+        document.addEventListener('click', (e) => {
+            if (!e.target.classList.contains('term') && !popup.contains(e.target)) {
+                popup.classList.remove('show');
+                if (activeTerm) {
+                    activeTerm.classList.remove('active');
+                    activeTerm = null;
+                }
+            }
+        });
+
+        // Скрытие при скролле
+        window.addEventListener('scroll', () => {
+            popup.classList.remove('show');
+            if (activeTerm) {
+                activeTerm.classList.remove('active');
+                activeTerm = null;
+            }
+        });
+    </script>
+</body>
+</html>
